@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
@@ -22,7 +22,7 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <BrowserRouter>
+        <HashRouter>
           <div className="app-container">
             <Navbar />
             <Routes>
@@ -42,7 +42,7 @@ function App() {
             </Routes>
             <Chatbot />
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </CartProvider>
     </AuthProvider>
   )
