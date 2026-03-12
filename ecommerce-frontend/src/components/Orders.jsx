@@ -3,16 +3,23 @@ import { Link } from 'react-router-dom'
 import { Package } from 'lucide-react'
 import axios from 'axios'
 import { API_BASE_URL } from '../config/api'
+import { useAuth } from '../context/AuthContext'
 
 export default function Orders() {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
+    const { user } = useAuth()
 
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/api/orders`)
+        if (!user || !user.email) {
+            setLoading(false)
+            return
+        }
+
+        axios.get(`${API_BASE_URL}/api/orders?email=${encodeURIComponent(user.email)}`)
             .then(res => { setOrders(res.data); setLoading(false) })
             .catch(() => setLoading(false))
-    }, [])
+    }, [user])
 
     if (loading) return <div className="page-container"><p className="loading">Loading orders...</p></div>
 

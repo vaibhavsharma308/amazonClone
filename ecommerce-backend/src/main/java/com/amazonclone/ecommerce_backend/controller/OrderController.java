@@ -41,7 +41,10 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders(@RequestParam(required = false) String email) {
+        if (email != null && !email.trim().isEmpty()) {
+            return orderRepository.findByEmailOrderByOrderDateDesc(email);
+        }
         return orderRepository.findAll();
     }
 
