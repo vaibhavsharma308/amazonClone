@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Package } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function Orders() {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/orders')
+        axios.get(`${API_BASE_URL}/api/orders`)
             .then(res => { setOrders(res.data); setLoading(false) })
             .catch(() => setLoading(false))
     }, [])

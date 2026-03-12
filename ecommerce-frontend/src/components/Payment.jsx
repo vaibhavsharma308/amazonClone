@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { CreditCard, Lock, ShieldCheck, Loader2 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function Payment() {
     const { orderId } = useParams()
@@ -22,7 +23,7 @@ export default function Payment() {
     })
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/orders/${orderId}`)
+        axios.get(`${API_BASE_URL}/api/orders/${orderId}`)
             .then(res => { setOrder(res.data); setLoading(false) })
             .catch(() => { setError('Order not found'); setLoading(false) })
     }, [orderId])
@@ -73,7 +74,7 @@ export default function Payment() {
         setError('')
 
         try {
-            await axios.post('http://localhost:8080/api/payments/process', {
+            await axios.post(`${API_BASE_URL}/api/payments/process`, {
                 orderId: parseInt(orderId),
                 cardNumber: card.cardNumber,
                 cardHolderName: card.cardHolderName,

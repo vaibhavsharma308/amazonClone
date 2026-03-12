@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { CheckCircle, Package, CreditCard, ShieldCheck } from 'lucide-react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function OrderConfirmation() {
     const { id } = useParams()
@@ -11,8 +12,8 @@ export default function OrderConfirmation() {
 
     useEffect(() => {
         Promise.all([
-            axios.get(`http://localhost:8080/api/orders/${id}`),
-            axios.get(`http://localhost:8080/api/payments/order/${id}`).catch(() => ({ data: null }))
+            axios.get(`${API_BASE_URL}/api/orders/${id}`),
+            axios.get(`${API_BASE_URL}/api/payments/order/${id}`).catch(() => ({ data: null }))
         ]).then(([orderRes, paymentRes]) => {
             setOrder(orderRes.data)
             setPayment(paymentRes.data)

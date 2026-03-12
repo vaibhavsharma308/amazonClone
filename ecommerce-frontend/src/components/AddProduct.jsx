@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { ArrowLeft, Upload, Save } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function AddProduct() {
     const { user } = useAuth()
@@ -23,7 +24,7 @@ export default function AddProduct() {
         e.preventDefault()
         setSaving(true)
         try {
-            await axios.post('http://localhost:8080/api/products', {
+            await axios.post(`${API_BASE_URL}/api/products`, {
                 ...form,
                 price: parseFloat(form.price),
                 stock: parseInt(form.stock),

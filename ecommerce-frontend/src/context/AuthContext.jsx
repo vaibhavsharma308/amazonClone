@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 const AuthContext = createContext()
 
@@ -16,7 +17,7 @@ export function AuthProvider({ children }) {
     }, [])
 
     const login = async (email, password) => {
-        const res = await axios.post('http://localhost:8080/api/auth/login', { email, password })
+        const res = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password })
         const userData = res.data
         setUser(userData)
         localStorage.setItem('amazon_user', JSON.stringify(userData))
@@ -24,12 +25,12 @@ export function AuthProvider({ children }) {
     }
 
     const register = async (name, email, password) => {
-        const res = await axios.post('http://localhost:8080/api/auth/register', { name, email, password })
+        const res = await axios.post(`${API_BASE_URL}/api/auth/register`, { name, email, password })
         return res.data
     }
 
     const updateProfile = async (updates) => {
-        const res = await axios.put(`http://localhost:8080/api/auth/user/${user.id}`, updates)
+        const res = await axios.put(`${API_BASE_URL}/api/auth/user/${user.id}`, updates)
         const updatedUser = res.data
         setUser(updatedUser)
         localStorage.setItem('amazon_user', JSON.stringify(updatedUser))

@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Save } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function EditProduct() {
     const { user } = useAuth()
@@ -24,7 +25,7 @@ export default function EditProduct() {
 
     const fetchProduct = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/products/${id}`)
+            const res = await axios.get(`${API_BASE_URL}/api/products/${id}`)
             const p = res.data
             setForm({
                 name: p.name, price: p.price, description: p.description,
@@ -44,7 +45,7 @@ export default function EditProduct() {
         e.preventDefault()
         setSaving(true)
         try {
-            await axios.put(`http://localhost:8080/api/products/${id}`, {
+            await axios.put(`${API_BASE_URL}/api/products/${id}`, {
                 ...form,
                 price: parseFloat(form.price),
                 stock: parseInt(form.stock),

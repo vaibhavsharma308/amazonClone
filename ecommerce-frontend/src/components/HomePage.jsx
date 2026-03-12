@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import { Truck, ShieldCheck, CreditCard, Headphones, ArrowRight, Zap, Gift, Globe } from 'lucide-react'
 import axios from 'axios'
 import ProductCard from './ProductCard'
+import { API_BASE_URL } from '../config/api'
 
 export default function HomePage() {
     const [products, setProducts] = useState([])
@@ -13,7 +14,7 @@ export default function HomePage() {
     const searchQuery = searchParams.get('search') || ''
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/products/categories')
+        axios.get(`${API_BASE_URL}/api/products/categories`)
             .then(res => setCategories(res.data))
             .catch(() => { })
     }, [])
@@ -24,7 +25,7 @@ export default function HomePage() {
         if (searchQuery) params.append('search', searchQuery)
         if (selectedCategory) params.append('category', selectedCategory)
 
-        axios.get(`http://localhost:8080/api/products?${params.toString()}`)
+        axios.get(`${API_BASE_URL}/api/products?${params.toString()}`)
             .then(res => { setProducts(res.data); setLoading(false) })
             .catch(() => setLoading(false))
     }, [searchQuery, selectedCategory])

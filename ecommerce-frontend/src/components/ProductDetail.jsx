@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { Star, ShoppingCart, ArrowLeft, Package, Truck } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function ProductDetail() {
     const { id } = useParams()
@@ -13,7 +14,7 @@ export default function ProductDetail() {
     const [added, setAdded] = useState(false)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/products/${id}`)
+        axios.get(`${API_BASE_URL}/api/products/${id}`)
             .then(res => { setProduct(res.data); setLoading(false) })
             .catch(() => setLoading(false))
     }, [id])

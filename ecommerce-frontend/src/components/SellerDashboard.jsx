@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Package, Plus, Edit3, Trash2, DollarSign, BarChart3, TrendingUp, Store } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function SellerDashboard() {
     const { user } = useAuth()
@@ -20,7 +21,7 @@ export default function SellerDashboard() {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/products/seller/${user.id}`)
+            const res = await axios.get(`${API_BASE_URL}/api/products/seller/${user.id}`)
             setProducts(res.data)
         } catch (err) {
             console.error('Failed to fetch seller products:', err)
@@ -31,7 +32,7 @@ export default function SellerDashboard() {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this product?')) return
         try {
-            await axios.delete(`http://localhost:8080/api/products/${id}`)
+            await axios.delete(`${API_BASE_URL}/api/products/${id}`)
             setProducts(products.filter(p => p.id !== id))
         } catch (err) {
             console.error('Failed to delete product:', err)

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import axios from 'axios'
+import { API_BASE_URL } from '../config/api'
 
 export default function Checkout() {
     const { cartItems, cartTotal, cartCount } = useCart()
@@ -32,7 +33,7 @@ export default function Checkout() {
         }
 
         try {
-            const res = await axios.post('http://localhost:8080/api/orders', order)
+            const res = await axios.post(`${API_BASE_URL}/api/orders`, order)
             navigate(`/payment/${res.data.id}`)
         } catch (err) {
             console.error('Order failed:', err)
