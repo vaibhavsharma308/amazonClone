@@ -1,5 +1,5 @@
-# Use official maven/Java 17 image to create a build artifact
-FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
+# Use official maven/Java 21 image to create a build artifact
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 WORKDIR /app
 
 # Copy pom.xml and source code
@@ -10,7 +10,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Run the application
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
